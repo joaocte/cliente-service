@@ -5,6 +5,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
     id("io.micronaut.application") version "3.4.1"
     id("org.jetbrains.kotlin.plugin.jpa") version "1.6.21"
+    id 'war'
 
 }
 
@@ -27,9 +28,9 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut.data:micronaut-data-hibernate-jpa")
     implementation("io.micronaut.sql:micronaut-jdbc-hikari")
-
+    implementation('mysql:mysql-connector-java:8.0.29')
     runtimeOnly("ch.qos.logback:logback-classic")
-    runtimeOnly("com.h2database:h2")
+//    runtimeOnly("com.h2database:h2")
 
 
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -58,7 +59,7 @@ tasks {
 }
 graalvmNative.toolchainDetection = false
 micronaut {
-    runtime("netty")
+    runtime("tomcat")
     testRuntime("junit5")
     processing {
         incremental(true)
