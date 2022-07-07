@@ -4,10 +4,12 @@ import br.com.curso.application.command.AtualizarClienteCommand
 import br.com.curso.application.command.CadastrarClienteCommand
 import br.com.curso.application.command.DeletarClienteCommand
 import br.com.curso.application.query.ObterClientePorIdQyery
+import br.com.curso.application.query.ObterTodosClientesFilter
 import br.com.curso.application.request.AtualizarClienteRequest
 import br.com.curso.application.request.CadastrarClienteRequest
 import br.com.curso.application.response.ClienteResponse
 import br.com.curso.infrastructure.model.ClienteModel
+import io.micronaut.data.model.Pageable
 
 fun CadastrarClienteCommand.toModel() : ClienteModel {
     return ClienteModel(id = null,nome = this.nome, documento = this.documento, endereco = this.endereco)
@@ -29,4 +31,8 @@ fun Long.toObterClientePorIdQuery(): ObterClientePorIdQyery
 }
 fun Long.toDeletarClienteCommand(): DeletarClienteCommand {
     return DeletarClienteCommand(this)
+}
+
+fun String?.toObterTodosClientesFilter(pageable: Pageable): ObterTodosClientesFilter {
+    return ObterTodosClientesFilter(this, pageable)
 }

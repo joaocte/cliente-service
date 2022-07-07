@@ -1,5 +1,6 @@
 package br.com.curso.controller
 
+import br.com.curso.application.query.ObterTodosClientesFilter
 import br.com.curso.application.request.AtualizarClienteRequest
 import br.com.curso.application.request.CadastrarClienteRequest
 import br.com.curso.application.response.CadastrarClienteResponse
@@ -12,6 +13,9 @@ import br.com.curso.application.usecase.obterclientes.IObterClientesUseCase
 import br.com.curso.extension.toCommand
 import br.com.curso.extension.toDeletarClienteCommand
 import br.com.curso.extension.toObterClientePorIdQuery
+import br.com.curso.extension.toObterTodosClientesFilter
+import io.micronaut.data.model.Page
+import io.micronaut.data.model.Pageable
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.*
 
@@ -30,8 +34,8 @@ import io.micronaut.http.annotation.*
     }
 
     @Get
-    fun obterTodosClientes(): List<ClienteResponse> {
-        return obterClientesUseCase.execute()
+    fun obterTodosClientes(@QueryValue nome: String?, pageable: Pageable): Page<ClienteResponse> {
+        return obterClientesUseCase.execute(nome.toObterTodosClientesFilter(pageable))
     }
 
     @Get("/{id}")
@@ -51,4 +55,5 @@ import io.micronaut.http.annotation.*
         atualizarClienteUseCase.execute(request.toCommand(id))
     }
 }
+
 
